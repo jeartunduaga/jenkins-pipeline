@@ -108,10 +108,18 @@ class TestNominaDocente(unittest.TestCase):
             self.assertIn("Error: Ingrese un número entero válido (>= 0).", output)
 
     # Caso 10: Verificar el recálculo automático si se corrige un dato.
-    @patch('builtins.input', side_effect=['-5', '10'])
-    def test_recálculo_hora_extra(self, mock_input):
+    @patch('builtins.input', side_effect=['-5', '10'])  # Mock de input para simular los valores negativos y positivos
+    @patch('sys.stdout', new_callable=StringIO)  # Mock de la salida estándar para capturar los prints
+    def test_recálculo_hora_extra(self, mock_stdout, mock_input):
+        # Ejecutar la función que solicita la entrada
         resultado = leer_entero_no_negativo("Ingrese horas extra diurnas: ")
+
+        # Verificamos que el resultado final sea 10
         self.assertEqual(resultado, 10)
+
+        # Verificamos que se haya impreso el mensaje de error por el valor negativo
+        output = mock_stdout.getvalue()
+        self.assertIn("Error: No se permiten números negativos.", output)
 
     # Caso 11: Confirmar que se apliquen los recargos correctos en recargo dominical/festivo diurno.
     @patch('builtins.input', side_effect=['1'])
