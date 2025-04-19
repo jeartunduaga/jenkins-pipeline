@@ -2,12 +2,22 @@ pipeline {
     agent any  // Ejecutar en cualquier nodo disponible de Jenkins
 
     stages {
+        stage('Preparación') {
+            steps {
+                script {
+                    echo 'Instalando dependencias...'
+                    // Instalamos las dependencias necesarias antes de ejecutar las pruebas
+                    sh 'pip install -r requirements.txt'  // Asegúrate de que xmlrunner esté en requirements.txt
+                }
+            }
+        }
+
         stage('Ejecutar Pruebas') {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    // Ejecutar las pruebas con unittest usando xmlrunner y generar los resultados en formato XML
-                    sh 'python3 -m unittest test_nomina.py'  // Esto debería generar result.xml
+                    // Ejecutamos las pruebas con unittest y generamos el reporte en formato XML
+                    sh 'python3 -m unittest test_nomina.py'
                 }
             }
         }
@@ -16,7 +26,7 @@ pipeline {
             steps {
                 script {
                     echo 'Generando resultados...'
-                    // Archivar el archivo result.xml como un artefacto para poder visualizarlo
+                    // Archivamos el archivo result.xml como un artefacto para poder visualizarlo
                     archiveArtifacts artifacts: 'result.xml', allowEmptyArchive: true
                 }
             }
