@@ -1,5 +1,7 @@
 import unittest
 from unittest.mock import patch
+import xmlrunner
+
 from io import StringIO
 
 
@@ -220,4 +222,5 @@ class TestNominaDocente(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    with open("result.xml", "wb") as output:
+        unittest.main(testRunner=xmlrunner.XMLTestRunner(output=output))

@@ -6,8 +6,8 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    // Ejecutamos las pruebas con unittest y generamos el reporte en formato XML usando xmlrunner
-                    sh 'python3 -m unittest discover -s . -p "test_nomina.py" > result.xml'
+                    // Ejecutar las pruebas con unittest usando xmlrunner y generar los resultados en formato XML
+                    sh 'python3 -m unittest test_nomina.py'  // Esto debería generar result.xml
                 }
             }
         }
@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     echo 'Generando resultados...'
-                    // Archivamos el archivo result.xml como un artefacto para poder visualizarlo
+                    // Archivar el archivo result.xml como un artefacto para poder visualizarlo
                     archiveArtifacts artifacts: 'result.xml', allowEmptyArchive: true
                 }
             }
