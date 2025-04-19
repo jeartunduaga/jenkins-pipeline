@@ -6,8 +6,8 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    // Ejecutamos las pruebas con unittest (o pytest si lo prefieres)
-                    sh 'python3 -m unittest test_nomina.py'
+                    // Ejecutamos las pruebas especificando el archivo test_nomina.py y generamos los resultados en formato XML
+                    sh 'python3 -m unittest test_nomina.py > result.xml'
                 }
             }
         }
@@ -16,7 +16,8 @@ pipeline {
             steps {
                 script {
                     echo 'Generando resultados...'
-                    // Aquí puedes agregar cualquier acción adicional (como guardar los resultados)
+                    // Archivamos el archivo result.xml como un artefacto para poder visualizarlo
+                    archiveArtifacts artifacts: 'result.xml', allowEmptyArchive: true
                 }
             }
         }
