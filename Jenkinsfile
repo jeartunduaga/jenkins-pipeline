@@ -6,8 +6,12 @@ pipeline {
             steps {
                 script {
                     echo 'Instalando dependencias...'
-                    // Instalamos las dependencias necesarias antes de ejecutar las pruebas
-                    sh 'pip install -r requirements.txt'  // Asegúrate de que xmlrunner esté en requirements.txt
+
+                    // Crear un entorno virtual
+                    sh 'python3 -m venv venv'  // Crear un entorno virtual llamado 'venv'
+
+                    // Activar el entorno virtual y luego instalar las dependencias
+                    sh 'source venv/bin/activate && pip install -r requirements.txt'  // Para Linux/Mac
                 }
             }
         }
@@ -16,8 +20,9 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    // Ejecutamos las pruebas con unittest y generamos el reporte en formato XML
-                    sh 'python3 -m unittest test_nomina.py'
+
+                    // Activar el entorno virtual y ejecutar las pruebas con unittest
+                    sh 'source venv/bin/activate && python3 -m unittest test_nomina.py'
                 }
             }
         }
