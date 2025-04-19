@@ -6,13 +6,13 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    // Ejecutamos las pruebas especificando el archivo test_nomina.py y generamos los resultados en formato XML
-                    sh 'python3 -m unittest test_nomina.py > result.xml'
+                    // Ejecutamos las pruebas con unittest y generamos el archivo result.xml
+                    sh 'python3 -m unittest test_nomina.py --xml result.xml'
                 }
             }
         }
 
-        stage('Resultados') {
+        stage('Archivar Resultados') {
             steps {
                 script {
                     echo 'Generando resultados...'
@@ -29,6 +29,7 @@ pipeline {
         }
         success {
             echo 'Las pruebas fueron exitosas.'
+            junit '**/result.xml'  // Publica el informe de pruebas JUnit para procesar el archivo result.xml
         }
         failure {
             echo 'Hubo un error en el pipeline.'
