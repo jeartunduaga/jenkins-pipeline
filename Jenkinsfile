@@ -6,17 +6,16 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-
-                    // Ejecutamos las pruebas con xmlrunner para generar resultados en formato XML
-                    sh 'python3 -m xmlrunner discover -s . -p "test_nomina.py" > result.xml'
+                    // Ejecutamos las pruebas especificando el archivo test_nomina.py y generamos los resultados en formato XML
+                    sh 'python3 -m unittest test_nomina.py > result.xml'
                 }
             }
         }
 
-        stage('Archivar Resultados') {
+        stage('Resultados') {
             steps {
                 script {
-                    echo 'Archivando resultados...'
+                    echo 'Generando resultados...'
                     // Archivamos el archivo result.xml como un artefacto para poder visualizarlo
                     archiveArtifacts artifacts: 'result.xml', allowEmptyArchive: true
                 }
