@@ -6,8 +6,10 @@ pipeline {
             steps {
                 script {
                     echo 'Preparando el entorno...'
-                    // Aquí puedes agregar cualquier preparación que necesite el entorno (como instalación de dependencias)
-                    sh 'pip install -r requirements.txt'  // Si tienes un archivo de dependencias
+                    // Crear un entorno virtual
+                    sh 'python3 -m venv venv'  // Crea un entorno virtual en la carpeta 'venv'
+                    // Activar el entorno virtual y luego instalar las dependencias
+                    sh '. venv/bin/activate && pip install -r requirements.txt'  // Activamos el entorno y ejecutamos pip
                 }
             }
         }
@@ -17,7 +19,7 @@ pipeline {
                 script {
                     echo 'Ejecutando pruebas...'
                     // Ejecutamos las pruebas con pytest o unittest (según como hayas configurado las pruebas)
-                    sh 'python -m unittest test_nomina.py'
+                    sh '. venv/bin/activate && python -m unittest test_nomina.py'  // Usamos el entorno virtual para ejecutar las pruebas
                 }
             }
         }
@@ -26,7 +28,6 @@ pipeline {
             steps {
                 script {
                     echo 'Generando resultados...'
-                    // Aquí puedes agregar acciones para guardar los resultados de las pruebas o cualquier otra acción
                 }
             }
         }
