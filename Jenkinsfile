@@ -6,8 +6,9 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    // Ejecutamos las pruebas con unittest y generamos el archivo result.xml
-                    sh 'python3 -m unittest test_nomina.py --xml result.xml'
+
+                    // Ejecutamos las pruebas con xmlrunner para generar resultados en formato XML
+                    sh 'python3 -m xmlrunner discover -s . -p "test_nomina.py" > result.xml'
                 }
             }
         }
@@ -15,7 +16,7 @@ pipeline {
         stage('Archivar Resultados') {
             steps {
                 script {
-                    echo 'Generando resultados...'
+                    echo 'Archivando resultados...'
                     // Archivamos el archivo result.xml como un artefacto para poder visualizarlo
                     archiveArtifacts artifacts: 'result.xml', allowEmptyArchive: true
                 }
@@ -29,7 +30,6 @@ pipeline {
         }
         success {
             echo 'Las pruebas fueron exitosas.'
-            junit '**/result.xml'  // Publica el informe de pruebas JUnit para procesar el archivo result.xml
         }
         failure {
             echo 'Hubo un error en el pipeline.'
