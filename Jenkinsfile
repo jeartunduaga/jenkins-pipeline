@@ -6,8 +6,8 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    // Ejecutamos las pruebas especificando el archivo test_nomina.py y generamos los resultados en formato XML
-                    sh 'python3 -m unittest test_nomina.py > result.xml'
+                    // Ejecutamos las pruebas con unittest y generamos el reporte en formato XML usando xmlrunner
+                    sh 'python3 -m unittest discover -s . -p "test_nomina.py" > result.xml'
                 }
             }
         }
