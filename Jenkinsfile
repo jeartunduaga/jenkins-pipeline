@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     echo 'Instalando dependencias...'
-                    
+
                     // Crear el entorno virtual
                     sh 'python3 -m venv venv'
 
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-                    
+
                     // Ejecutar las pruebas con unittest usando xmlrunner y generar los resultados en formato XML
                     sh 'bash -c "source venv/bin/activate && python3 -m unittest test_nomina.py"'
                 }
@@ -31,7 +31,8 @@ pipeline {
             steps {
                 script {
                     echo 'Generando resultados...'
-                    // Archivamos el archivo result.xml como un artefacto para poder visualizarlo
+                    // Archivar el archivo result.xml como un artefacto para poder visualizarlo
+                    // Nos aseguramos de que el archivo esté en el directorio correcto
                     archiveArtifacts artifacts: 'result.xml', allowEmptyArchive: true
                 }
             }
