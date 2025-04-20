@@ -222,5 +222,4 @@ class TestNominaDocente(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    with open("/var/jenkins_home/workspace/jenkins/result.xml", "wb") as output:  # Ruta absoluta para Jenkins
-        unittest.main(testRunner=xmlrunner.XMLTestRunner(output=output))
+    unittest.main()
