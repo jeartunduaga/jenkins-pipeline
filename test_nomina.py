@@ -1,7 +1,5 @@
 import unittest
 from unittest.mock import patch
-import xmlrunner
-
 from io import StringIO
 
 
