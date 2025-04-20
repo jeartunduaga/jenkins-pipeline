@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     echo 'Ejecutando pruebas...'
-
+                    
                     // Ejecutar las pruebas con unittest usando xmlrunner y generar los resultados en formato XML
                     sh 'bash -c "source venv/bin/activate && python3 -m unittest test_nomina.py"'
                 }
@@ -31,9 +31,12 @@ pipeline {
             steps {
                 script {
                     echo 'Generando resultados...'
-                    // Archivar el archivo result.xml como un artefacto para poder visualizarlo
-                    // Nos aseguramos de que el archivo esté en el directorio correcto
-                    archiveArtifacts artifacts: 'result.xml', allowEmptyArchive: true
+                    
+                    // Verificamos si el archivo result.xml existe antes de intentar archivarlos
+                    sh 'ls -l /var/jenkins_home/workspace/jenkins/result.xml'  // Verificar la ubicación de result.xml
+
+                    // Archivamos el archivo result.xml como un artefacto para poder visualizarlo
+                    archiveArtifacts artifacts: '/var/jenkins_home/workspace/jenkins/result.xml', allowEmptyArchive: true
                 }
             }
         }
