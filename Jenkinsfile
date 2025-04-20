@@ -21,7 +21,7 @@ pipeline {
                 script {
                     echo 'Ejecutando pruebas...'
                     
-                    // Ejecutar las pruebas con unittest dentro del entorno virtual
+                    // Ejecutar las pruebas con unittest usando xmlrunner y generar los resultados en formato XML
                     sh 'bash -c "source venv/bin/activate && python3 -m unittest test_nomina.py"'
                 }
             }
